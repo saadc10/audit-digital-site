@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initMobileMenu();
     initScrollReveal();
-    initContactForm();
 });
 
 
@@ -72,31 +71,6 @@ function initScrollReveal() {
     });
 
     revealElements.forEach(el => observer.observe(el));
-}
-
-
-/* --- Contact form handling --- */
-function initContactForm() {
-    const form = document.getElementById('contactForm');
-
-    form.addEventListener('submit', (e) => {
-        const action = form.getAttribute('action');
-
-        // If Formspree isn't configured yet, prevent submission and show message
-        if (action.includes('YOUR_FORM_ID')) {
-            e.preventDefault();
-
-            const btn = form.querySelector('button[type="submit"]');
-            const originalText = btn.textContent;
-            btn.textContent = 'Form coming soon, email us directly';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }, 3000);
-        }
-    });
 }
 
 
