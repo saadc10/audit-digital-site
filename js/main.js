@@ -1,5 +1,5 @@
 /* ============================================
-   Audit Digital — Scripts
+   Audit Digital | Scripts
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -88,7 +88,7 @@ function initContactForm() {
 
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.textContent;
-            btn.textContent = 'Form coming soon — email us directly';
+            btn.textContent = 'Form coming soon, email us directly';
             btn.disabled = true;
 
             setTimeout(() => {
