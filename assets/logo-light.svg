@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 50" width="320" height="50">
+  <text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="400" fill="#0B1120" letter-spacing="1">Audit</text>
+  <line x1="0" y1="40" x2="126" y2="40" stroke="#B8935A" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="160" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="400" fill="#0B1120" letter-spacing="1">Digital</text>
+  <line x1="160" y1="40" x2="312" y2="40" stroke="#B8935A" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

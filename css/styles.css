@@ -177,24 +177,7 @@ img {
 }
 
 .nav__logo-mark {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background-color: var(--color-bg-dark);
-    color: var(--color-accent);
-    font-family: var(--font-heading);
-    font-size: 20px;
-    font-style: italic;
-    border-radius: 6px;
-}
-
-.nav__logo-text {
-    font-family: var(--font-heading);
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--color-text);
+    flex-shrink: 0;
 }
 
 .nav__links {
@@ -820,10 +803,6 @@ img {
     align-items: flex-start;
     padding-bottom: 32px;
     border-bottom: 1px solid var(--color-border-dark);
-}
-
-.footer__brand .nav__logo-text {
-    color: var(--color-text-light);
 }
 
 .footer__brand p {
