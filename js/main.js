@@ -98,6 +98,7 @@ var compareData = {
 };
 
 var sliderDragging = false;
+var sliderAnimating = false;
 
 function openComparison(key) {
     var data = compareData[key];
@@ -115,15 +116,54 @@ function openComparison(key) {
     document.getElementById('compareNew').src = data.newImg;
     document.getElementById('compareLiveLink').href = data.liveUrl;
 
+    sliderAnimating = false;
     setSliderPosition(50);
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    setTimeout(function() { autoSweep(); }, 800);
 }
 
 function closeComparison() {
     var modal = document.getElementById('compareModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    sliderAnimating = false;
+}
+
+function autoSweep() {
+    sliderAnimating = true;
+    var keyframes = [
+        { from: 50, to: 8, duration: 1200 },
+        { from: 8, to: 92, duration: 2000 },
+        { from: 92, to: 50, duration: 1000 }
+    ];
+    var step = 0;
+
+    function runStep() {
+        if (step >= keyframes.length || !sliderAnimating) {
+            sliderAnimating = false;
+            return;
+        }
+        var kf = keyframes[step];
+        var startTime = null;
+
+        function animate(ts) {
+            if (!sliderAnimating) return;
+            if (!startTime) startTime = ts;
+            var progress = Math.min((ts - startTime) / kf.duration, 1);
+            var eased = 0.5 - 0.5 * Math.cos(progress * Math.PI);
+            setSliderPosition(kf.from + (kf.to - kf.from) * eased);
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                step++;
+                runStep();
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    runStep();
 }
 
 function setSliderPosition(pct) {
@@ -162,12 +202,14 @@ function setSliderPosition(pct) {
 
     slider.addEventListener('mousedown', function(e) {
         sliderDragging = true;
+        sliderAnimating = false;
         setSliderPosition(getPosition(e));
         e.preventDefault();
     });
 
     slider.addEventListener('touchstart', function(e) {
         sliderDragging = true;
+        sliderAnimating = false;
         setSliderPosition(getPosition(e));
     }, { passive: true });
 
