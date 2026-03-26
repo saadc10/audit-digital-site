@@ -103,6 +103,11 @@ function openComparison(key) {
     var data = compareData[key];
     if (!data) return;
 
+    if (window.innerWidth <= 768) {
+        window.open(data.liveUrl, '_blank');
+        return;
+    }
+
     var modal = document.getElementById('compareModal');
     document.getElementById('compareTitle').textContent = data.title;
     document.getElementById('compareSubtitle').textContent = data.subtitle;
