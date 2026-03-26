@@ -158,16 +158,16 @@
             <span class="section-label">Our Work</span>
             <h2 class="section-title">What your new site<br><em>could look like.</em></h2>
             <div class="portfolio__grid">
-                <a href="https://uppal.auditdigital.co.uk/" target="_blank" rel="noopener" class="portfolio__item portfolio__item--live">
+                <div class="portfolio__item portfolio__item--live" onclick="openComparison('uppal')" role="button" tabindex="0">
                     <div class="portfolio__img-wrap">
                         <img src="assets/portfolio-uppal.png" alt="Uppal & Co Accountants website redesign" class="portfolio__img">
                     </div>
                     <div class="portfolio__info">
                         <h3>Uppal & Co Accountants</h3>
                         <p>Slough, Berkshire</p>
-                        <span class="portfolio__view-link">View site &rarr;</span>
+                        <span class="portfolio__view-link">Compare before &amp; after</span>
                     </div>
-                </a>
+                </div>
                 <div class="portfolio__item portfolio__item--placeholder">
                     <div class="portfolio__placeholder-inner">
                         <span>Coming Soon</span>
@@ -325,6 +325,40 @@
             </div>
         </div>
     </footer>
+
+    <!-- Comparison Modal -->
+    <div class="compare-modal" id="compareModal">
+        <div class="compare-modal__backdrop" onclick="closeComparison()"></div>
+        <div class="compare-modal__container">
+            <div class="compare-modal__header">
+                <div class="compare-modal__title">
+                    <h3 id="compareTitle">Uppal & Co Accountants</h3>
+                    <p id="compareSubtitle">Homepage comparison</p>
+                </div>
+                <div class="compare-modal__actions">
+                    <a href="" id="compareLiveLink" target="_blank" rel="noopener" class="compare-modal__visit">Visit live site &rarr;</a>
+                    <button class="compare-modal__close" onclick="closeComparison()" aria-label="Close">&times;</button>
+                </div>
+            </div>
+            <div class="compare-modal__slider" id="compareSlider">
+                <div class="compare-modal__img-wrap">
+                    <img src="" alt="Original website" class="compare-modal__img compare-modal__img--old" id="compareOld">
+                    <div class="compare-modal__img-clip" id="compareClip">
+                        <img src="" alt="Redesigned website" class="compare-modal__img compare-modal__img--new" id="compareNew">
+                    </div>
+                </div>
+                <div class="compare-modal__divider" id="compareDivider">
+                    <div class="compare-modal__handle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 12L4 16M8 12L4 8M8 12H16M16 12L20 8M16 12L20 16" stroke="#FAFAF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <span class="compare-modal__label compare-modal__label--old">Before</span>
+                <span class="compare-modal__label compare-modal__label--new">After</span>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

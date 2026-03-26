@@ -581,6 +581,7 @@ img {
     overflow: hidden;
     transition: all 0.4s var(--ease-out);
     aspect-ratio: auto;
+    cursor: pointer;
 }
 
 .portfolio__item--live:hover {
@@ -646,6 +647,220 @@ img {
 
 .portfolio__item--live:hover .portfolio__view-link {
     color: var(--color-accent-hover);
+}
+
+/* ============================================
+   Comparison Modal
+   ============================================ */
+.compare-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-out);
+}
+
+.compare-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.compare-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(11, 17, 32, 0.7);
+    backdrop-filter: blur(8px);
+}
+
+.compare-modal__container {
+    position: relative;
+    width: 90vw;
+    max-width: 1000px;
+    max-height: 90vh;
+    background-color: var(--color-bg-card);
+    border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.35s var(--ease-out);
+}
+
+.compare-modal.active .compare-modal__container {
+    transform: translateY(0) scale(1);
+}
+
+.compare-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+}
+
+.compare-modal__title h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 2px;
+}
+
+.compare-modal__title p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+.compare-modal__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.compare-modal__visit {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: color 0.2s;
+}
+
+.compare-modal__visit:hover {
+    color: var(--color-accent-hover);
+}
+
+.compare-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 20px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.compare-modal__close:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+}
+
+.compare-modal__slider {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    cursor: ew-resize;
+    user-select: none;
+}
+
+.compare-modal__img-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.compare-modal__img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.compare-modal__img--old {
+    display: block;
+}
+
+.compare-modal__img-clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.compare-modal__img--new {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    max-width: none;
+    height: 100%;
+    object-fit: cover;
+}
+
+.compare-modal__divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background-color: var(--color-accent);
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.compare-modal__handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.compare-modal__label {
+    position: absolute;
+    top: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 4px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.compare-modal__label--old {
+    right: 16px;
+    background-color: rgba(11, 17, 32, 0.7);
+    color: #FAFAF7;
+}
+
+.compare-modal__label--new {
+    left: 16px;
+    background-color: rgba(184, 147, 90, 0.9);
+    color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+    .compare-modal__container {
+        width: 96vw;
+        max-height: 95vh;
+    }
+
+    .compare-modal__header {
+        padding: 16px;
+    }
+
+    .compare-modal__visit {
+        display: none;
+    }
 }
 
 /* ============================================
