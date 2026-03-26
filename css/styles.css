@@ -1092,11 +1092,72 @@ img {
 
 .footer__bottom {
     padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 .footer__bottom p {
     font-size: 13px;
     color: rgba(240, 237, 230, 0.35);
+}
+
+.footer__privacy {
+    font-size: 13px;
+    color: rgba(240, 237, 230, 0.35);
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.footer__privacy:hover {
+    color: var(--color-accent);
+}
+
+/* ============================================
+   Legal Pages
+   ============================================ */
+.legal {
+    padding: 140px 0 80px;
+}
+
+.legal__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+.legal__updated {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-bottom: 48px;
+}
+
+.legal h2 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--color-text);
+    margin-top: 40px;
+    margin-bottom: 12px;
+}
+
+.legal h3 {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+.legal p {
+    font-size: 16px;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    max-width: 720px;
+    margin-bottom: 12px;
 }
 
 /* ============================================
@@ -1183,6 +1244,11 @@ img {
     .footer__links {
         flex-wrap: wrap;
         gap: 16px;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+        gap: 8px;
     }
 }
 
