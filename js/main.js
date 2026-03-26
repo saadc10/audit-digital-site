@@ -98,7 +98,6 @@ var compareData = {
 };
 
 var sliderDragging = false;
-var sliderAnimating = false;
 
 function openComparison(key) {
     var data = compareData[key];
@@ -114,63 +113,20 @@ function openComparison(key) {
     setSliderPosition(50);
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-
-    setTimeout(function() { autoSweep(); }, 600);
 }
 
 function closeComparison() {
     var modal = document.getElementById('compareModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
-    sliderAnimating = false;
 }
 
 function setSliderPosition(pct) {
     pct = Math.max(2, Math.min(98, pct));
-    var clip = document.getElementById('compareClip');
+    var newImg = document.getElementById('compareNew');
     var divider = document.getElementById('compareDivider');
-    clip.style.width = pct + '%';
+    newImg.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
     divider.style.left = pct + '%';
-}
-
-function autoSweep() {
-    sliderAnimating = true;
-    var start = 50;
-    var keyframes = [
-        { target: 75, duration: 500 },
-        { target: 25, duration: 800 },
-        { target: 50, duration: 500 }
-    ];
-    var step = 0;
-
-    function runStep() {
-        if (step >= keyframes.length || !sliderAnimating) {
-            sliderAnimating = false;
-            return;
-        }
-        var kf = keyframes[step];
-        var from = step === 0 ? start : keyframes[step - 1].target;
-        var to = kf.target;
-        var dur = kf.duration;
-        var startTime = null;
-
-        function animate(ts) {
-            if (!sliderAnimating) return;
-            if (!startTime) startTime = ts;
-            var elapsed = ts - startTime;
-            var progress = Math.min(elapsed / dur, 1);
-            var eased = 0.5 - 0.5 * Math.cos(progress * Math.PI);
-            setSliderPosition(from + (to - from) * eased);
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                step++;
-                runStep();
-            }
-        }
-        requestAnimationFrame(animate);
-    }
-    runStep();
 }
 
 (function() {
@@ -185,14 +141,12 @@ function autoSweep() {
 
     slider.addEventListener('mousedown', function(e) {
         sliderDragging = true;
-        sliderAnimating = false;
         setSliderPosition(getPosition(e));
         e.preventDefault();
     });
 
     slider.addEventListener('touchstart', function(e) {
         sliderDragging = true;
-        sliderAnimating = false;
         setSliderPosition(getPosition(e));
     }, { passive: true });
 
