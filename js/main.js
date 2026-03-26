@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initMobileMenu();
     initScrollReveal();
+    initPortfolioKeyboard();
 });
 
 
@@ -37,7 +38,9 @@ function initMobileMenu() {
     toggle.addEventListener('click', () => {
         toggle.classList.toggle('active');
         menu.classList.toggle('active');
-        document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        var isOpen = menu.classList.contains('active');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        toggle.setAttribute('aria-expanded', isOpen);
     });
 
     links.forEach(link => {
@@ -45,6 +48,7 @@ function initMobileMenu() {
             toggle.classList.remove('active');
             menu.classList.remove('active');
             document.body.style.overflow = '';
+            toggle.setAttribute('aria-expanded', 'false');
         });
     });
 }
@@ -71,6 +75,19 @@ function initScrollReveal() {
     });
 
     revealElements.forEach(el => observer.observe(el));
+}
+
+
+/* --- Portfolio keyboard accessibility --- */
+function initPortfolioKeyboard() {
+    document.querySelectorAll('.portfolio__item--live[role="button"]').forEach(function(card) {
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.click();
+            }
+        });
+    });
 }
 
 
