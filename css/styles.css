@@ -1113,6 +1113,17 @@ img {
     color: var(--color-accent);
 }
 
+.footer__company-link {
+    color: rgba(240, 237, 230, 0.35);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+}
+
+.footer__company-link:hover {
+    color: var(--color-accent);
+}
+
 /* ============================================
    Legal Pages
    ============================================ */

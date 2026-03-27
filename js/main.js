@@ -104,6 +104,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 /* --- Comparison slider --- */
+
+/* ADD NEW FIRMS HERE — copy the uppal block, change the key and values
+   Images go in assets/comparisons/[slug]-old.png and [slug]-new.png */
+
 var compareData = {
     uppal: {
         title: 'Uppal & Co Accountants',
