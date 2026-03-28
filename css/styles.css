@@ -134,6 +134,8 @@ img {
 .btn--outline:hover {
     border-color: var(--color-accent);
     color: var(--color-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(26, 29, 39, 0.08);
 }
 
 .btn--full {
@@ -212,6 +214,8 @@ img {
 .nav__links .nav__cta:hover {
     background-color: var(--color-accent);
     color: #FFFFFF;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(11, 17, 32, 0.25);
 }
 
 /* Mobile toggle */
@@ -302,7 +306,7 @@ img {
 .hero__bg-pattern {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(184, 147, 90, 0.18) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(184, 147, 90, 0.25) 1px, transparent 1px);
     background-size: 32px 32px;
     /* Fade the grid out at the bottom so it doesn't hard-cut into the next section */
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.4) 80%, transparent 100%);

@@ -179,22 +179,40 @@ function initHeroParallax() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.innerWidth < 768) return;
 
-    var pattern  = document.querySelector('.hero__bg-pattern');
-    var label    = document.querySelector('.hero__label');
-    var title    = document.querySelector('.hero__title');
-    var subtitle = document.querySelector('.hero__subtitle');
-    var actions  = document.querySelector('.hero__actions');
+    var pattern   = document.querySelector('.hero__bg-pattern');
+    var label     = document.querySelector('.hero__label');
+    var title     = document.querySelector('.hero__title');
+    var subtitle  = document.querySelector('.hero__subtitle');
+    var actions   = document.querySelector('.hero__actions');
     var indicator = document.querySelector('.hero__scroll-indicator');
-    var hero     = document.querySelector('.hero');
+    var hero      = document.querySelector('.hero');
     if (!pattern || !title || !hero) return;
 
-    // Promote each layer to its own compositor layer
     [label, title, subtitle, actions, indicator].forEach(function(el) {
         if (el) el.style.willChange = 'transform, opacity';
     });
 
     var ticking = false;
     var heroH = hero.offsetHeight;
+    var ready = false;
+
+    // The .animate-in CSS animation uses `forwards` fill mode, which locks
+    // opacity/transform on those elements and overrides JS inline styles.
+    // Remove the animation once it finishes so the parallax can take over.
+    function releaseAnimations() {
+        if (ready) return;
+        ready = true;
+        [label, title, subtitle, actions].forEach(function(el) {
+            if (el) {
+                el.style.animation = 'none';
+                el.style.opacity   = '1';
+                el.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Longest animation: delay 0.55s + duration 0.8s = 1.35s
+    setTimeout(releaseAnimations, 1450);
 
     function update() {
         var scrollY = window.scrollY;
@@ -207,14 +225,12 @@ function initHeroParallax() {
             return;
         }
 
-        var p = scrollY / heroH; // 0 → 1 as hero scrolls out
+        var p = scrollY / heroH;
 
-        // Background: moves down faster than the scroll + slowly zooms in
-        // Result: feels like the scene is receding behind the content
+        // Background drifts faster than content + zooms slightly — receding depth
         pattern.style.transform = 'translateY(' + (scrollY * 0.5) + 'px) scale(' + (1 + p * 0.07) + ')';
 
-        // Each content layer drifts at a different speed and fades independently.
-        // The label leaves first, buttons linger longest — creates real depth.
+        // Each layer peels away at a different speed — real multi-layer parallax
         if (label) {
             label.style.transform = 'translateY(' + (scrollY * 0.38) + 'px)';
             label.style.opacity = Math.max(0, 1 - p * 2.4);
@@ -239,6 +255,8 @@ function initHeroParallax() {
     }
 
     window.addEventListener('scroll', function() {
+        // If user scrolls before the timeout fires, release animations immediately
+        if (!ready) releaseAnimations();
         if (!ticking) {
             requestAnimationFrame(update);
             ticking = true;
