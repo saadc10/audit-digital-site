@@ -302,9 +302,11 @@ img {
 .hero__bg-pattern {
     position: absolute;
     inset: 0;
-    background-image:
-        radial-gradient(circle at 75% 25%, rgba(184, 147, 90, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 25% 75%, rgba(11, 17, 32, 0.03) 0%, transparent 50%);
+    background-image: radial-gradient(circle, rgba(184, 147, 90, 0.18) 1px, transparent 1px);
+    background-size: 32px 32px;
+    /* Fade the grid out at the bottom so it doesn't hard-cut into the next section */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.4) 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.4) 80%, transparent 100%);
     will-change: transform;
 }
 
