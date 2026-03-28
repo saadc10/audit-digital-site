@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initPortfolioKeyboard();
     initHeroParallax();
     initContactForm();
+    initActiveNav();
 });
 
 
@@ -93,6 +94,44 @@ function initPortfolioKeyboard() {
 }
 
 
+/* --- Active nav state --- */
+function initActiveNav() {
+    var sectionIds = ['problem', 'services', 'portfolio', 'about', 'contact'];
+    var navLinks = {};
+
+    document.querySelectorAll('.nav__links a[href^="#"]').forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        navLinks[id] = link;
+    });
+
+    var sections = sectionIds.map(function(id) {
+        return document.getElementById(id);
+    }).filter(Boolean);
+
+    function update() {
+        // Find the last section whose top edge is above 40% of the viewport height
+        var threshold = window.scrollY + window.innerHeight * 0.4;
+        var active = null;
+
+        for (var i = 0; i < sections.length; i++) {
+            if (sections[i].offsetTop <= threshold) {
+                active = sections[i].id;
+            }
+        }
+
+        sectionIds.forEach(function(id) {
+            if (navLinks[id]) navLinks[id].classList.remove('active');
+        });
+        if (active && navLinks[active]) {
+            navLinks[active].classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+}
+
+
 /* --- Contact form --- */
 function initContactForm() {
     var form = document.getElementById('contactForm');
@@ -140,12 +179,19 @@ function initHeroParallax() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.innerWidth < 768) return;
 
-    var pattern = document.querySelector('.hero__bg-pattern');
-    var content = document.querySelector('.hero__container');
-    var hero = document.querySelector('.hero');
-    if (!pattern || !content || !hero) return;
+    var pattern  = document.querySelector('.hero__bg-pattern');
+    var label    = document.querySelector('.hero__label');
+    var title    = document.querySelector('.hero__title');
+    var subtitle = document.querySelector('.hero__subtitle');
+    var actions  = document.querySelector('.hero__actions');
+    var indicator = document.querySelector('.hero__scroll-indicator');
+    var hero     = document.querySelector('.hero');
+    if (!pattern || !title || !hero) return;
 
-    content.style.willChange = 'transform, opacity';
+    // Promote each layer to its own compositor layer
+    [label, title, subtitle, actions, indicator].forEach(function(el) {
+        if (el) el.style.willChange = 'transform, opacity';
+    });
 
     var ticking = false;
     var heroH = hero.offsetHeight;
@@ -154,22 +200,40 @@ function initHeroParallax() {
         var scrollY = window.scrollY;
 
         if (scrollY > heroH) {
-            // Hero fully scrolled past — reset and stop updating
-            pattern.style.transform = '';
-            content.style.transform = '';
-            content.style.opacity = '';
+            [pattern, label, title, subtitle, actions, indicator].forEach(function(el) {
+                if (el) { el.style.transform = ''; el.style.opacity = ''; }
+            });
             ticking = false;
             return;
         }
 
-        var progress = scrollY / heroH;
+        var p = scrollY / heroH; // 0 → 1 as hero scrolls out
 
-        // Background drifts at 30% scroll speed — slower movement creates depth
-        pattern.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
+        // Background: moves down faster than the scroll + slowly zooms in
+        // Result: feels like the scene is receding behind the content
+        pattern.style.transform = 'translateY(' + (scrollY * 0.5) + 'px) scale(' + (1 + p * 0.07) + ')';
 
-        // Content drifts gently upward and fades slightly as hero exits
-        content.style.transform = 'translateY(' + (scrollY * 0.12) + 'px)';
-        content.style.opacity = 1 - progress * 0.35;
+        // Each content layer drifts at a different speed and fades independently.
+        // The label leaves first, buttons linger longest — creates real depth.
+        if (label) {
+            label.style.transform = 'translateY(' + (scrollY * 0.38) + 'px)';
+            label.style.opacity = Math.max(0, 1 - p * 2.4);
+        }
+        if (title) {
+            title.style.transform = 'translateY(' + (scrollY * 0.28) + 'px)';
+            title.style.opacity = Math.max(0, 1 - p * 1.9);
+        }
+        if (subtitle) {
+            subtitle.style.transform = 'translateY(' + (scrollY * 0.2) + 'px)';
+            subtitle.style.opacity = Math.max(0, 1 - p * 1.6);
+        }
+        if (actions) {
+            actions.style.transform = 'translateY(' + (scrollY * 0.13) + 'px)';
+            actions.style.opacity = Math.max(0, 1 - p * 1.3);
+        }
+        if (indicator) {
+            indicator.style.opacity = Math.max(0, 1 - p * 4);
+        }
 
         ticking = false;
     }
@@ -181,7 +245,6 @@ function initHeroParallax() {
         }
     }, { passive: true });
 
-    // Recalculate hero height on resize
     window.addEventListener('resize', function() {
         heroH = hero.offsetHeight;
     }, { passive: true });

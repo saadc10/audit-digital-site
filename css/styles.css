@@ -194,23 +194,24 @@ img {
     transition: color 0.2s;
 }
 
-.nav__links a:hover {
+.nav__links a:hover,
+.nav__links a.active {
     color: var(--color-text);
 }
 
-.nav__cta {
+.nav__links .nav__cta {
     padding: 8px 20px;
     background-color: var(--color-bg-dark);
-    color: #FFFFFF !important;
+    color: #FFFFFF;
     border-radius: 6px;
     font-size: 14px;
     font-weight: 600;
-    transition: all 0.3s var(--ease-out) !important;
+    transition: all 0.3s var(--ease-out);
 }
 
-.nav__cta:hover {
-    background-color: var(--color-accent) !important;
-    color: #FFFFFF !important;
+.nav__links .nav__cta:hover {
+    background-color: var(--color-accent);
+    color: #FFFFFF;
 }
 
 /* Mobile toggle */
@@ -1016,6 +1017,38 @@ img {
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+/* ============================================
+   CTA Strip
+   ============================================ */
+.cta-strip {
+    padding: 80px 0;
+    background-color: var(--color-bg-dark);
+}
+
+.cta-strip__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.cta-strip__text {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    color: var(--color-text-light);
+    line-height: 1.25;
+    max-width: 620px;
+}
+
+@media (max-width: 768px) {
+    .cta-strip__inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 28px;
+    }
 }
 
 /* ============================================
