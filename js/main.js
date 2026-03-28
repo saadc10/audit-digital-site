@@ -99,7 +99,8 @@ function initActiveNav() {
     var sectionIds = ['problem', 'services', 'portfolio', 'about', 'contact'];
     var navLinks = {};
 
-    document.querySelectorAll('.nav__links a[href^="#"]').forEach(function(link) {
+    // Exclude the nav CTA — it's a button, not a section indicator
+    document.querySelectorAll('.nav__links a[href^="#"]:not(.nav__cta)').forEach(function(link) {
         var id = link.getAttribute('href').replace('#', '');
         navLinks[id] = link;
     });
@@ -179,84 +180,40 @@ function initHeroParallax() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.innerWidth < 768) return;
 
-    var pattern   = document.querySelector('.hero__bg-pattern');
-    var label     = document.querySelector('.hero__label');
-    var title     = document.querySelector('.hero__title');
-    var subtitle  = document.querySelector('.hero__subtitle');
-    var actions   = document.querySelector('.hero__actions');
-    var indicator = document.querySelector('.hero__scroll-indicator');
-    var hero      = document.querySelector('.hero');
-    if (!pattern || !title || !hero) return;
+    var pattern = document.querySelector('.hero__bg-pattern');
+    var content = document.querySelector('.hero__container');
+    var hero    = document.querySelector('.hero');
+    if (!pattern || !content || !hero) return;
 
-    [label, title, subtitle, actions, indicator].forEach(function(el) {
-        if (el) el.style.willChange = 'transform, opacity';
-    });
+    content.style.willChange = 'transform, opacity';
 
     var ticking = false;
     var heroH = hero.offsetHeight;
-    var ready = false;
-
-    // The .animate-in CSS animation uses `forwards` fill mode, which locks
-    // opacity/transform on those elements and overrides JS inline styles.
-    // Remove the animation once it finishes so the parallax can take over.
-    function releaseAnimations() {
-        if (ready) return;
-        ready = true;
-        [label, title, subtitle, actions].forEach(function(el) {
-            if (el) {
-                el.style.animation = 'none';
-                el.style.opacity   = '1';
-                el.style.transform = 'translateY(0)';
-            }
-        });
-    }
-
-    // Longest animation: delay 0.55s + duration 0.8s = 1.35s
-    setTimeout(releaseAnimations, 1450);
 
     function update() {
         var scrollY = window.scrollY;
 
         if (scrollY > heroH) {
-            [pattern, label, title, subtitle, actions, indicator].forEach(function(el) {
-                if (el) { el.style.transform = ''; el.style.opacity = ''; }
-            });
+            pattern.style.transform = '';
+            content.style.transform = '';
+            content.style.opacity   = '';
             ticking = false;
             return;
         }
 
-        var p = scrollY / heroH;
+        var progress = scrollY / heroH;
 
-        // Background drifts faster than content + zooms slightly — receding depth
-        pattern.style.transform = 'translateY(' + (scrollY * 0.5) + 'px) scale(' + (1 + p * 0.07) + ')';
+        // Background drifts at 30% scroll speed — slower than content, creates depth
+        pattern.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
 
-        // Each layer peels away at a different speed — real multi-layer parallax
-        if (label) {
-            label.style.transform = 'translateY(' + (scrollY * 0.38) + 'px)';
-            label.style.opacity = Math.max(0, 1 - p * 2.4);
-        }
-        if (title) {
-            title.style.transform = 'translateY(' + (scrollY * 0.28) + 'px)';
-            title.style.opacity = Math.max(0, 1 - p * 1.9);
-        }
-        if (subtitle) {
-            subtitle.style.transform = 'translateY(' + (scrollY * 0.2) + 'px)';
-            subtitle.style.opacity = Math.max(0, 1 - p * 1.6);
-        }
-        if (actions) {
-            actions.style.transform = 'translateY(' + (scrollY * 0.13) + 'px)';
-            actions.style.opacity = Math.max(0, 1 - p * 1.3);
-        }
-        if (indicator) {
-            indicator.style.opacity = Math.max(0, 1 - p * 4);
-        }
+        // Content lifts gently and fades slightly as the hero exits
+        content.style.transform = 'translateY(' + (scrollY * 0.12) + 'px)';
+        content.style.opacity   = 1 - progress * 0.35;
 
         ticking = false;
     }
 
     window.addEventListener('scroll', function() {
-        // If user scrolls before the timeout fires, release animations immediately
-        if (!ready) releaseAnimations();
         if (!ticking) {
             requestAnimationFrame(update);
             ticking = true;
