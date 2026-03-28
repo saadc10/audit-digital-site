@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initPortfolioKeyboard();
     initHeroParallax();
+    initContactForm();
 });
 
 
@@ -58,7 +59,7 @@ function initMobileMenu() {
 /* --- Scroll reveal animations --- */
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-        '.problem__card, .services__item, .portfolio__item, .process__step, .about__stat'
+        '.problem__card, .problem__why-item, .services__item, .portfolio__item, .process__step, .about__stat'
     );
 
     revealElements.forEach(el => el.classList.add('reveal'));
@@ -87,6 +88,48 @@ function initPortfolioKeyboard() {
                 e.preventDefault();
                 card.click();
             }
+        });
+    });
+}
+
+
+/* --- Contact form --- */
+function initContactForm() {
+    var form = document.getElementById('contactForm');
+    var submit = document.getElementById('contactSubmit');
+    var success = document.getElementById('formSuccess');
+    var error = document.getElementById('formError');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+        success.style.display = 'none';
+        error.style.display = 'none';
+
+        var data = new FormData(form);
+
+        fetch('https://formspree.io/f/mzdjnjjg', {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(function(res) {
+            if (res.ok) {
+                success.style.display = 'block';
+                form.reset();
+            } else {
+                error.style.display = 'block';
+            }
+        })
+        .catch(function() {
+            error.style.display = 'block';
+        })
+        .finally(function() {
+            submit.disabled = false;
+            submit.textContent = 'Send Enquiry';
         });
     });
 }
@@ -144,17 +187,6 @@ function initHeroParallax() {
     }, { passive: true });
 }
 
-
-/* --- Smooth scroll for anchor links (fallback) --- */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
 
 
 /* --- Comparison slider --- */

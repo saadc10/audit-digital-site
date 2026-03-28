@@ -62,8 +62,8 @@
                 <em>as hard as you do.</em>
             </h1>
             <p class="hero__subtitle animate-in">
-                We build modern, professional websites that help accountancy firms
-                attract better clients and establish trust before the first phone call.
+                We build websites that help accountancy firms
+                establish trust before the first phone call.
             </p>
             <div class="hero__actions animate-in">
                 <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/auditdigital?hide_gdpr_banner=1&background_color=fafaf7&text_color=1a1d27&primary_color=b8935a'});return false;" class="btn btn--primary">Book a Free Consultation</a>
@@ -76,7 +76,7 @@
         </div>
     </header>
 
-    <!-- Problem Section -->
+    <!-- Problem / Why Us Section -->
     <section class="problem" id="problem">
         <div class="container">
             <div class="problem__header">
@@ -98,6 +98,31 @@
                     <div class="problem__card-number">03</div>
                     <h3>No Clear Next Step</h3>
                     <p>A visitor lands on your site, reads your services, thinks "these seem good"... then what? Without a clear call to action, they leave and find a firm that makes it easy to get in touch.</p>
+                </div>
+            </div>
+
+            <div class="problem__divider"></div>
+
+            <div class="problem__why">
+                <span class="section-label">Why Audit Digital</span>
+                <h2 class="section-title">A different kind of<br><em>web design agency.</em></h2>
+                <div class="problem__why-grid">
+                    <div class="problem__why-item">
+                        <h3>Accountancy only</h3>
+                        <p>We work exclusively with accountancy firms. Not retailers, not restaurants, not startups. That focus means we understand your clients, your services, and what actually converts a visitor into an enquiry.</p>
+                    </div>
+                    <div class="problem__why-item">
+                        <h3>Small team, no bureaucracy</h3>
+                        <p>You deal directly with the person building your site, start to finish. No account managers, no handoffs, no waiting a week for a reply. Fast decisions, clear communication, no runaround.</p>
+                    </div>
+                    <div class="problem__why-item">
+                        <h3>Three weeks, not three months</h3>
+                        <p>Most agencies drag website projects out for months. We work to a tight three-week timeline: a discovery call, a build phase with regular check-ins, and a clean launch.</p>
+                    </div>
+                    <div class="problem__why-item">
+                        <h3>Full support after launch</h3>
+                        <p>Your site doesn't stop being our problem once it goes live. We offer ongoing maintenance, content updates, and technical support so you're never left dealing with it alone.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -288,7 +313,7 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact__form" id="contactForm" action="https://formspree.io/f/mzdjnjjg" method="POST">
+                <form class="contact__form" id="contactForm">
                     <div class="form__group">
                         <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" required placeholder="John Smith">
@@ -309,7 +334,9 @@
                         <label for="message">Tell us about your needs</label>
                         <textarea id="message" name="message" rows="4" placeholder="What are you looking for in a new website?"></textarea>
                     </div>
-                    <button type="submit" class="btn btn--primary btn--full">Send Enquiry</button>
+                    <button type="submit" class="btn btn--primary btn--full" id="contactSubmit">Send Enquiry</button>
+                    <p class="form__feedback form__feedback--success" id="formSuccess" aria-live="polite">Message sent. We'll be in touch shortly.</p>
+                    <p class="form__feedback form__feedback--error" id="formError" aria-live="polite">Something went wrong. Please try emailing us directly at <a href="mailto:hello@auditdigital.co.uk">hello@auditdigital.co.uk</a>.</p>
                 </form>
             </div>
         </div>

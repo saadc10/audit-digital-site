@@ -473,6 +473,62 @@ img {
     color: rgba(240, 237, 230, 0.7);
 }
 
+.problem__divider {
+    height: 1px;
+    background-color: var(--color-border-dark);
+    margin: 80px 0;
+}
+
+.problem__why {
+    /* inherits dark background from .problem */
+}
+
+.problem__why .section-title {
+    color: var(--color-text-light);
+    margin-bottom: 48px;
+}
+
+.problem__why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.problem__why-item {
+    padding: 36px 32px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 8px;
+    transition: border-color 0.4s var(--ease-out);
+}
+
+.problem__why-item:hover {
+    border-color: var(--color-accent);
+}
+
+.problem__why-item h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.problem__why-item p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(240, 237, 230, 0.7);
+}
+
+@media (max-width: 768px) {
+    .problem__why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .problem__divider {
+        margin: 56px 0;
+    }
+}
+
 /* ============================================
    Services
    ============================================ */
@@ -985,6 +1041,9 @@ img {
 
 .contact__details {
     margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .contact__detail {
@@ -1051,6 +1110,33 @@ img {
 .form__group textarea {
     resize: vertical;
     min-height: 100px;
+}
+
+.form__feedback {
+    display: none;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 12px 16px;
+    border-radius: 6px;
+}
+
+.form__feedback--success {
+    background-color: rgba(100, 160, 100, 0.1);
+    color: #3a7a3a;
+    border: 1px solid rgba(100, 160, 100, 0.3);
+}
+
+.form__feedback--error {
+    background-color: rgba(200, 80, 80, 0.08);
+    color: #9a3030;
+    border: 1px solid rgba(200, 80, 80, 0.2);
+}
+
+.form__feedback--error a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 /* ============================================
