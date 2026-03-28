@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initScrollReveal();
     initPortfolioKeyboard();
+    initHeroParallax();
 });
 
 
@@ -88,6 +89,59 @@ function initPortfolioKeyboard() {
             }
         });
     });
+}
+
+
+/* --- Hero parallax on scroll --- */
+function initHeroParallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.innerWidth < 768) return;
+
+    var pattern = document.querySelector('.hero__bg-pattern');
+    var content = document.querySelector('.hero__container');
+    var hero = document.querySelector('.hero');
+    if (!pattern || !content || !hero) return;
+
+    content.style.willChange = 'transform, opacity';
+
+    var ticking = false;
+    var heroH = hero.offsetHeight;
+
+    function update() {
+        var scrollY = window.scrollY;
+
+        if (scrollY > heroH) {
+            // Hero fully scrolled past — reset and stop updating
+            pattern.style.transform = '';
+            content.style.transform = '';
+            content.style.opacity = '';
+            ticking = false;
+            return;
+        }
+
+        var progress = scrollY / heroH;
+
+        // Background drifts at 30% scroll speed — slower movement creates depth
+        pattern.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
+
+        // Content drifts gently upward and fades slightly as hero exits
+        content.style.transform = 'translateY(' + (scrollY * 0.12) + 'px)';
+        content.style.opacity = 1 - progress * 0.35;
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    // Recalculate hero height on resize
+    window.addEventListener('resize', function() {
+        heroH = hero.offsetHeight;
+    }, { passive: true });
 }
 
 
