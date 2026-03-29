@@ -128,7 +128,7 @@ img {
 .btn--outline {
     background-color: transparent;
     color: var(--color-text);
-    border-color: var(--color-border);
+    border-color: var(--color-text-muted);
 }
 
 .btn--outline:hover {
@@ -945,7 +945,7 @@ img {
 
 .process__timeline {
     max-width: 640px;
-    margin-top: 48px;
+    margin: 48px auto 0;
 }
 
 .process__step {

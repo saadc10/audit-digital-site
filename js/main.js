@@ -16,18 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
 /* --- Navbar scroll effect --- */
 function initNav() {
     const nav = document.getElementById('nav');
-    let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-
-        if (currentScroll > 50) {
+        if (window.scrollY > 50) {
             nav.classList.add('nav--scrolled');
         } else {
             nav.classList.remove('nav--scrolled');
         }
-
-        lastScroll = currentScroll;
     }, { passive: true });
 }
 
@@ -60,7 +54,7 @@ function initMobileMenu() {
 /* --- Scroll reveal animations --- */
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-        '.problem__card, .problem__why-item, .services__item, .portfolio__item, .process__step, .about__stat'
+        '.section-label, .section-title, .problem__card, .problem__why-item, .services__item, .portfolio__item, .process__step, .about__stat'
     );
 
     revealElements.forEach(el => el.classList.add('reveal'));
