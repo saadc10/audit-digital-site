@@ -233,6 +233,13 @@ var compareData = {
         oldImg: 'assets/comparisons/uppal-old.png',
         newImg: 'assets/comparisons/uppal-new.png',
         liveUrl: 'https://uppal.auditdigital.co.uk/'
+    },
+    ah: {
+        title: 'A H Accountants',
+        subtitle: 'Homepage comparison',
+        oldImg: 'assets/comparisons/ah-old.png',
+        newImg: 'assets/comparisons/ah-new.png',
+        liveUrl: 'https://ah.auditdigital.co.uk/'
     }
 };
 
